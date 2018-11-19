@@ -1,29 +1,42 @@
 /** @format */
 import React from 'react';
-import { AppRegistry, Text, View } from 'react-native';
+import { AppRegistry, TouchableOpacity, View, Text } from 'react-native';
 import { name as appName } from './app.json';
 //ESTILOS
 const Estilos = {
-    estiloTexto: {
-        fontSize: 40,
-        backgroundColor: '#08509B',
-        height: 60,
-        width: 60,
+    principal: {
+        paddingTop: 40,
     },
-    estiloView: {
-        backgroundColor: 'skyblue',
-        height: 300,
-        justifyContent: 'center',
-        alignItems: 'flex-end',
+    botao: {
+        backgroundColor: '#48BBEC',
+        padding: 10,
+        borderColor: '#1D8EB8',
+        borderWidth: 1,
+        borderRadius: 8,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.4
+    },
+    textoBotao: {
+        color: '#FFF',
+        fontSize: 16,
+        fontWeight: 'bold',
+        alignSelf: 'center',
 
     }
 };
+
+const botaoPressionado = () => {
+    alert('Botão Pressionado');
+}
 //CRIAR COMPONENTE
 const App = () => {
-    const { estiloTexto, estiloView } = Estilos;
+    const { principal, botao, textoBotao } = Estilos;
     return (
-        <View style={estiloView}>
-            <Text style={estiloTexto} ></Text>
+        <View style={principal}>
+            <TouchableOpacity style={botao}>
+                <Text style={textoBotao}>Clique aqui</Text>
+            </TouchableOpacity>
         </View>
     );
 };
