@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: (Platform.OS === 'ios') ? 5 : 5,
         flexDirection: 'row',
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
     },
     foto: {
         width: 102,
