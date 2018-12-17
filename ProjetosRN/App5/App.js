@@ -3,22 +3,29 @@ import { Navigator } from 'react-native-deprecated-custom-components'
 
 import CenaPrincipal from './src/componentes/CenaPrincipal';
 import CenaClientes from './src/componentes/CenaClientes';
+import CenaContatos from './src/componentes/CenaContatos';
+import CenaEmpresa from './src/componentes/CenaEmpresa';
+import CenaServico from './src/componentes/CenaServico';
 
 export default class App extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{ id: 'a' }}
+        initialRoute={{ id: 'principal' }}
         renderScene={(route, navigator) => {
-          /* definir a cena com base na rota */
-          if (route.id === 'a') {
-            //exibir a cenaPrincipal
-            return (<CenaPrincipal navigator={navigator} />);
-          }
-
-          if (route.id === 'b') {
-            //exibir a cenaClientes
-            return (<CenaClientes navigator={navigator} />);
+          switch (route.id) {
+            case 'principal':
+              return (<CenaPrincipal navigator={navigator} />);
+            case 'cliente':
+              return (<CenaClientes navigator={navigator} />);
+            case 'contato':
+              return (<CenaContatos navigator={navigator} />);
+            case 'empresa':
+              return (<CenaEmpresa navigator={navigator} />);
+            case 'servico':
+              return (<CenaServico navigator={navigator} />);
+            default:
+              return false;
           }
         }}
       />
