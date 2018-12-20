@@ -1,15 +1,20 @@
 import React from 'react';
-import { Platform, StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
 
 export default props => (
-    <View>
-        <TextInput style={styles.visor} placeholder='Resultado' editable={false} />
+    <View style={styles.view}>
+        <TextInput style={{ fontSize: 20 }}
+            placeholder="Resultado"
+            placeholderTextColor="#2196F3"
+            editable={false} />
     </View>
 )
 
 const styles = StyleSheet.create({
-    visor: {
-        height: 10,
-        fontSize: 30,
+    view: {
+        paddingTop: 30,
+        paddingBottom: 30,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
