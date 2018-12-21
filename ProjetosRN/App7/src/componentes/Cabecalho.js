@@ -1,9 +1,9 @@
 import React from 'react';
-import { Platform, View, Text, StyleSheet } from 'react-native';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 
 export default props => (
-    <View style={styles.topo}>
-        <Text style={styles.txtTitulo}>Calculora 1.0</Text>
+    <View style={ styles.topo }>
+        <Text style={ styles.txtTitulo }>Calculora 1.0</Text>
     </View>
 )
 
