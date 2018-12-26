@@ -21,19 +21,19 @@ export default class App extends Component {
 
   cadastrarUsuario() {
     var email = "joaodematejr@gmail.com";
-    var senha = "abc123";
+    var senha = "1";
     const usuario = firebase.auth();
     usuario.createUserWithEmailAndPassword(
       email,
       senha
     ).catch(
       (erro) => {
-        var mensagemErro = "";
-        if (erro.code == "auth/weak-password") {
-          mensagemErro = "A senha Precisa ter no minimo 6 caracteres";
+        switch (erro.code) {
+          case "auth/weak-password":
+            alert("A senha Precisa ter no minimo 6 caracteres")
+            break;
         }
-        //erro.code, erro.message
-        alert(mensagemErro);
+
       }
     );
   }
