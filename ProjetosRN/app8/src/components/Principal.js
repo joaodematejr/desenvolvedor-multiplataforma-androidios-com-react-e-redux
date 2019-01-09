@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { SceneMap, TabViewAnimated } from 'react-native-tab-view';
 
 import Contatos from './Contatos';
-import Conversas from './Conversas';
+import Conversas from './Conversa';
 import TabBarMenu from './TabBarMenu';
 
 

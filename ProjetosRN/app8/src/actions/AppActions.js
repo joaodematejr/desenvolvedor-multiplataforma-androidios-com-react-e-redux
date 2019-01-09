@@ -1,5 +1,5 @@
 import firebase from 'firebase';
-import base64 from 'base-64';
+import b64 from 'base-64';
 import _ from 'lodash';
 
 import {
@@ -7,7 +7,8 @@ import {
     ADICIONA_CONTATO_ERRO,
     ADICIONA_CONTATO_SUCESSO,
     LISTA_CONTATO_USUARIO,
-    MODIFICA_MENSAGEM
+    MODIFICA_MENSAGEM,
+    LISTA_CONVERSA_USUARIO
 } from './types';
 
 export const modificaAdicionaContatoEmail = texto => {
@@ -20,7 +21,7 @@ export const modificaAdicionaContatoEmail = texto => {
 export const adicionaContato = email => {
 
     return dispatch => {
-        let emailB64 = base64.encode(email);
+        let emailB64 = b64.encode(email);
 
         firebase.database().ref(`/contatos/${emailB64}`)
             .once('value')
@@ -80,7 +81,7 @@ export const contatosUsuarioFetch = () => {
     const { currentUser } = firebase.auth();
 
     return (dispatch) => {
-        let emailUsuarioB64 = base64.encode(currentUser.email);
+        let emailUsuarioB64 = b64.encode(currentUser.email);
 
         firebase.database().ref(`/usuario_contatos/${emailUsuarioB64}`)
             .on("value", snapshot => {
@@ -104,8 +105,8 @@ export const enviarMensagem = (mensagem, contatoNome, contatoEmail) => {
     return dispatch => {
 
         //conversão para base 64
-        const usuarioEmailB64 = base64.encode(usuarioEmail)
-        const contatoEmailB64 = base64.encode(contatoEmail)
+        const usuarioEmailB64 = b64.encode(usuarioEmail)
+        const contatoEmailB64 = b64.encode(contatoEmail)
 
         firebase.database().ref(`/mensagens/${usuarioEmailB64}/${contatoEmailB64}`)
             .push({ mensagem, tipo: 'e' })
@@ -127,10 +128,28 @@ export const enviarMensagem = (mensagem, contatoNome, contatoEmail) => {
 
                         const dadosUsuario = _.first(_.values(snapshot.val()))
 
+                        console.log('linha 131', snapshot.val())
+
                         firebase.database().ref(`/usuario_conversas/${contatoEmailB64}/${usuarioEmailB64}`)
                             .set({ nome: dadosUsuario.nome, email: usuarioEmail })
                     })
             })
     }
 
+}
+
+export const conversaUsuarioFetch = contatoEmail => {
+
+    const { currentUser } = firebase.auth();
+
+    //compor os emails na base64
+    let usuarioEmailB64 = b64.encode(currentUser.email)
+    let contatoEmailB64 = b64.encode(contatoEmail)
+
+    return dispatch => {
+        firebase.database().ref(`/mensagens/${usuarioEmailB64}/${contatoEmailB64}`)
+            .on("value", snapshot => {
+                dispatch({ type: LISTA_CONVERSA_USUARIO, payload: snapshot.val() })
+            })
+    }
 }
