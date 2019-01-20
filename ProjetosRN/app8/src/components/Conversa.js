@@ -12,6 +12,9 @@ class Conversa extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (this.props.contatoEmail != nextProps.contatoEmail) {
+            this.props.conversaUsuarioFetch(nextProps.this.props.contatoEmail)
+        }
         this.criaFonteDeDados(nextProps.conversa);
     }
 
@@ -27,11 +30,17 @@ class Conversa extends Component {
     }
 
     renderRow(texto) {
+        if (texto.tipo === 'e') {
+            return (
+                <View style={ { alignItems: 'flex-end', marginTop: 5, marginBottom: 5, marginLeft: 40 } } >
+                    <Text style={ { fontSize: 18, color: '#000', padding: 10, backgroundColor: '#dbf5b4', elevation: 2 } }>{ texto.mensagem }</Text>
+                </ View>
+            )
+        }
         return (
-            <View>
-                <Text>{ texto.mensagem }</Text>
-                <Text>{ texto.tipo }</Text>
-            </View>
+            <View style={ { alignItems: 'flex-start', marginTop: 5, marginBottom: 5, marginRight: 40 } } >
+                <Text style={ { fontSize: 18, color: '#000', padding: 10, backgroundColor: '#f7f7f7', elevation: 2 } }>{ texto.mensagem }</Text>
+            </ View>
         )
     }
 

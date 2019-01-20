@@ -8,7 +8,9 @@ import {
     ADICIONA_CONTATO_SUCESSO,
     LISTA_CONTATO_USUARIO,
     MODIFICA_MENSAGEM,
-    LISTA_CONVERSA_USUARIO
+    LISTA_CONVERSA_USUARIO,
+    ENVIA_MENSAGEM_SUCESSO,
+    LISTA_CONVERSAS_USUARIO
 } from './types';
 
 export const modificaAdicionaContatoEmail = texto => {
@@ -113,7 +115,7 @@ export const enviarMensagem = (mensagem, contatoNome, contatoEmail) => {
             .then(() => {
                 firebase.database().ref(`/mensagens/${contatoEmailB64}/${usuarioEmailB64}`)
                     .push({ mensagem, tipo: 'r' })
-                    .then(() => dispatch({ type: 'xyz' }))
+                    .then(() => dispatch({ type: ENVIA_MENSAGEM_SUCESSO }))
             })
             .then(() => { //armazenar o cabeçalho de conversa do usuário autenticado
                 firebase.database().ref(`/usuario_conversas/${usuarioEmailB64}/${contatoEmailB64}`)
@@ -127,8 +129,6 @@ export const enviarMensagem = (mensagem, contatoNome, contatoEmail) => {
                     .then(snapshot => {
 
                         const dadosUsuario = _.first(_.values(snapshot.val()))
-
-                        console.log('linha 131', snapshot.val())
 
                         firebase.database().ref(`/usuario_conversas/${contatoEmailB64}/${usuarioEmailB64}`)
                             .set({ nome: dadosUsuario.nome, email: usuarioEmail })
@@ -150,6 +150,17 @@ export const conversaUsuarioFetch = contatoEmail => {
         firebase.database().ref(`/mensagens/${usuarioEmailB64}/${contatoEmailB64}`)
             .on("value", snapshot => {
                 dispatch({ type: LISTA_CONVERSA_USUARIO, payload: snapshot.val() })
+            })
+    }
+}
+
+export const conversasUsuarioFetch = () => {
+    const { currentUser } = firebase.auth();
+    return dispatch => {
+        let usuarioEmailB64 = b64.encode(currentUser.email);
+        firebase.database().ref(`/usuario_conversas/${usuarioEmailB64}`)
+            .on('value', snapshot => {
+                dispatch({ type: LISTA_CONVERSAS_USUARIO, payload: snapshot.val() })
             })
     }
 }

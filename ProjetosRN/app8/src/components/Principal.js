@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { SceneMap, TabViewAnimated } from 'react-native-tab-view';
-
 import Contatos from './Contatos';
-import Conversas from './Conversa';
+import Conversas from './Conversas';
 import TabBarMenu from './TabBarMenu';
+
 
 
 export default class Principal extends Component {

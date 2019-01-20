@@ -23,10 +23,11 @@ export const modificaNome = (texto) => {
 }
 export const cadastraUsuario = ({ nome, email, senha }) => {
     return dispatch => {
+        let emailFormatado = email.toLowerCase();
         dispatch({ type: CADASTRO_EM_ANDAMENTO })
-        firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(email, senha)
+        firebase.auth().createUserAndRetrieveDataWithEmailAndPassword(emailFormatado, senha)
             .then(user => {
-                let emailB64 = base64.encode(email);
+                let emailB64 = base64.encode(emailFormatado);
                 firebase.database().ref(`/contatos/${emailB64}`).push({ nome }).then(value => cadastroUsuarioSucesso(dispatch))
             })
             .catch(erro => cadastroUsuarioErro(erro, dispatch));
@@ -44,8 +45,9 @@ const cadastroUsuarioErro = (erro, dispatch) => {
 
 export const autenticarUsuario = ({ email, senha }) => {
     return dispatch => {
+        let emailFormatado = email.toLowerCase();
         dispatch({ type: LOGIN_EM_ANDAMENTO })
-        firebase.auth().signInWithEmailAndPassword(email, senha)
+        firebase.auth().signInWithEmailAndPassword(emailFormatado, senha)
             .then(value => loginUsuarioSucesso(dispatch))
             .catch(erro => loginUsuarioErro(erro, dispatch));
     }
